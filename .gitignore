@@ -31,4 +31,4 @@ build/
 # .ruby-version
 # .ruby-gemset
 
-*.sublime-
+*.sublime-*
