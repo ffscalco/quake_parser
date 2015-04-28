@@ -7,4 +7,8 @@ class Player
     @id = id
     @kills = 0
   end
+
+  def to_s
+    self.name
+  end
 end
