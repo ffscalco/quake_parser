@@ -24,5 +24,6 @@ class Game
         return line.split("Kill: ").last[0]
       else
         return ""
+      end
     end
 end
