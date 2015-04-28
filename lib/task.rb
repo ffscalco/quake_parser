@@ -8,6 +8,25 @@ require './lib/player.rb'
 class Task
   def initialize
     @games = []
+    parse_log
+  end
+
+  def resume_game
+    info = []
+    @games.each do |game|
+      normalized = Hash.new
+      game.players.select{|p| normalized[p.name] = p.kills}
+
+      info << {
+        "#{game.name}:" => {
+          "total_kills": game.total_kills.to_i,
+          "players": game.players.map(&:name).sort,
+          "kills": game.players.map{|p| {p.name => p.kills}}.sort_by{|p|  p.first[0]}#normalized.sort.to_h
+        }
+      }
+    end
+
+    ap info
   end
 
   private
