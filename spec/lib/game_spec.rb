@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 require './lib/game'
 require './lib/player'
 

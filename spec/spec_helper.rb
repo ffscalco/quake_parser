@@ -1,6 +1,7 @@
 require 'simplecov'
 SimpleCov.start 'rails'
 require 'factory_girl_rails'
+require 'pry'
 
 RSpec.configure do |config|
   config.order = "random"
