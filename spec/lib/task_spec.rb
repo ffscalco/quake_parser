@@ -70,4 +70,18 @@ RSpec.describe Task do
       end
     end
   end
+  describe "#mount_player_rank" do
+    it "should return a hash of player total_kills and total_deaths" do
+      player = Player.new("1")
+      player.total_kills = 5
+      player.total_deaths = 4
+
+      expected = {
+        "total_kills" => 5,
+        "total_deaths" => 4
+      }
+
+      expect(task.send(:mount_player_rank, player)).to eq(expected)
+    end
+  end
 end
