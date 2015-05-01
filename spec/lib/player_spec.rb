@@ -12,6 +12,14 @@ RSpec.describe Player do
     it "should initialize kills with zero" do
       expect(player.instance_variable_get(:@kills)).to eq(0)
     end
+
+    it "should initialize total_kills with zero" do
+      expect(player.instance_variable_get(:@total_kills)).to eq(0)
+    end
+
+    it "should initialize total_deaths with zero" do
+      expect(player.instance_variable_get(:@total_deaths)).to eq(0)
+    end
   end
 
   describe "#to_s" do
