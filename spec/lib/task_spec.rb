@@ -1,4 +1,5 @@
 require 'spec_helper'
+require './spec/helper_methods'
 require './lib/task'
 
 RSpec.describe Task do
@@ -16,7 +17,7 @@ RSpec.describe Task do
     end
   end
 
-  describe "#resume" do
+  describe "#resume_game" do
     it "should return a hash with game name, total kills, players and players's kills" do
       expected = {"game_1:" => {
           "total_kills": 4,
@@ -29,23 +30,10 @@ RSpec.describe Task do
         }
       }
 
-      game = Game.new("game_1")
-      game.total_kills = 4
-      player1 = Player.new(1)
-      player2 = Player.new(3)
-      player3 = Player.new(5)
-      player1.name = "Zeh"
-      player1.kills = -2
-      player2.name = "Dono da Bola"
-      player2.kills = -1
-      player3.name = "Isgalamido"
-      player3.kills = 1
-      game.players = [player1, player2, player3]
-
-      allow(File).to receive(:open) {StringIO.new("")}
+      allow_any_instance_of(Parser).to receive(:parse_log).and_return(true)
 
       task = Task.new
-      task.instance_variable_set(:@games, [game])
+      task.instance_variable_set(:@games, [simple_game])
 
       expect(task.resume_game).to eq([expected])
     end
