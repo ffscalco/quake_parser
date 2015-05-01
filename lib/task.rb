@@ -30,4 +30,31 @@ class Task
 
     info
   end
+
+  def resume_with_rank
+    rank = {}
+
+    @games.each do |game|
+      game.players.each do |player|
+        mapped_player = rank.select{|p| p == player.name }.first
+
+        if mapped_player.nil?
+          rank[player.name] = mount_player_rank(player)
+        else
+          rank[player.name]["total_kills"] += player.total_kills
+          rank[player.name]["total_deaths"] += player.total_deaths
+        end
+      end
+    end
+
+    rank.sort_by{|key, value| -value["total_kills"]}.to_h
+  end
+
+  private
+    def mount_player_rank(player)
+      return {
+        "total_kills" => player.total_kills,
+        "total_deaths" => player.total_deaths
+      }
+    end
 end

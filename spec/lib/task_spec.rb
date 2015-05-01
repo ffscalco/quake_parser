@@ -17,25 +17,57 @@ RSpec.describe Task do
     end
   end
 
-  describe "#resume_game" do
-    it "should return a hash with game name, total kills, players and players's kills" do
-      expected = {"game_1:" => {
-          "total_kills": 4,
-          "players": ["Dono da Bola", "Isgalamido", "Zeh"],
-          "kills": [
-            {"Dono da Bola" => -1},
-            {"Isgalamido" => 1},
-            {"Zeh" => -2}
-          ]
-        }
-      }
-
+  describe "results" do
+    before :each do
       allow_any_instance_of(Parser).to receive(:parse_log).and_return(true)
+    end
 
-      task = Task.new
-      task.instance_variable_set(:@games, [simple_game])
+    describe "#resume_game" do
+      it "should return a hash with game name, total kills, players and players's kills" do
+        expected = {"game_1:" => {
+            "total_kills": 4,
+            "players": ["Dono da Bola", "Isgalamido", "Zeh"],
+            "kills": [
+              {"Dono da Bola" => -1},
+              {"Isgalamido" => 1},
+              {"Zeh" => -2}
+            ]
+          }
+        }
 
-      expect(task.resume_game).to eq([expected])
+        task = Task.new
+        task.instance_variable_set(:@games, [simple_game])
+
+        expect(task.resume_game).to eq([expected])
+      end
+    end
+
+    describe "#resume_with_rank" do
+      it "should return the resume game with player rank" do
+        expected = {
+            "Mal" => {
+              "total_kills" => 3,
+              "total_deaths" => 0
+            },
+            "Zeh" => {
+              "total_kills" => 1,
+              "total_deaths" => 3
+            },
+            "Dono da Bola" => {
+              "total_kills" => 1,
+              "total_deaths" => 2
+            },
+            "Isgalamido" => {
+              "total_kills" => 1,
+              "total_deaths" => 0
+            }
+        }
+
+        task = Task.new
+        task.instance_variable_set(:@games, medium_game)
+
+        expect(task.resume_with_rank).to eq(expected)
+      end
     end
   end
 end
