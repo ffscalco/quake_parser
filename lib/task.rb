@@ -11,11 +11,12 @@ class Task
 
   def initialize
     @games = []
+
+    parse_log
   end
 
   def resume_game
     info = []
-    parse_log
 
     @games.each do |game|
       info << {

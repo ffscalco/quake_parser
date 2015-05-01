@@ -6,7 +6,13 @@ RSpec.describe Task do
 
   describe "#initialize" do
     it "should initialize games with empty array" do
+      allow_any_instance_of(Parser).to receive(:parse_log).and_return(true)
+
       expect(task.instance_variable_get(:@games)).to eq([])
+    end
+
+    it "should call the parser" do
+      expect(task.instance_variable_get(:@games).size).to eq(21)
     end
   end
 
