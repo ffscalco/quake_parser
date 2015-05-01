@@ -59,6 +59,17 @@ RSpec.describe Parser do
 
       expect(anonymous_class.instance_variable_get(:@game).players.first.kills).to eq(9)
     end
+
+    it "should increment player total_deaths" do
+      anonymous_class.instance_variable_set(:@game, Game.new("game_1"))
+      player = Player.new("7")
+      player.total_deaths = 2
+      anonymous_class.instance_variable_get(:@game).players << player
+
+      anonymous_class.send(:count_kills_by_world, world_kill)
+
+      expect(anonymous_class.instance_variable_get(:@game).players.first.total_deaths).to eq(3)
+    end
   end
 
   describe "#count_kills_by_player" do
@@ -73,6 +84,17 @@ RSpec.describe Parser do
       anonymous_class.send(:count_kills_by_player, player_kill)
 
       expect(anonymous_class.instance_variable_get(:@game).players.first.kills).to eq(5)
+    end
+
+    it "should increment player total_kills" do
+      anonymous_class.instance_variable_set(:@game, Game.new("game_1"))
+      player = Player.new("5")
+      player.total_kills = 9
+      anonymous_class.instance_variable_get(:@game).players << player
+
+      anonymous_class.send(:count_kills_by_player, player_kill)
+
+      expect(anonymous_class.instance_variable_get(:@game).players.first.total_kills).to eq(10)
     end
   end
 
