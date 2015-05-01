@@ -64,7 +64,7 @@ RSpec.describe Parser do
   describe "#count_kills_by_player" do
     let(:player_kill) {"22:06 Kill: 5 3 7: Some Player killed Another Player by MOD_ROCKET_SPLASH"}
 
-    it "should decrement player kills" do
+    it "should increment player kills" do
       anonymous_class.instance_variable_set(:@game, Game.new("game_1"))
       player = Player.new("5")
       player.kills = 4
