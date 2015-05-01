@@ -42,7 +42,7 @@ RSpec.describe Task do
       end
     end
 
-    describe "#resume_with_rank" do
+    describe "#rank_game" do
       it "should return the resume game with player rank" do
         expected = {
             "Mal" => {
@@ -66,7 +66,7 @@ RSpec.describe Task do
         task = Task.new
         task.instance_variable_set(:@games, medium_game)
 
-        expect(task.resume_with_rank).to eq(expected)
+        expect(task.rank_game).to eq(expected)
       end
     end
   end

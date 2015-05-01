@@ -31,7 +31,7 @@ class Task
     info
   end
 
-  def resume_with_rank
+  def rank_game
     rank = {}
 
     @games.each do |game|
