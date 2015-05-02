@@ -9,6 +9,7 @@ ap "Selecione uma das opções abaixo!"
 ap "Resumo dos jogos: 1"
 ap "Resumo dos jogos com rank dos jogadores: 2"
 ap "Resumo das mortes agrupadas: 3"
+ap "Resumo das mortes traduzidas agrupadas: 4"
 
 option = STDIN.gets
 
@@ -21,6 +22,9 @@ case(option.chomp())
     ap "Rank:"
     ap task.rank_game
   when "3"
+    ap task.means_deaths_game(false)
+  when "4"
+    ap task.means_deaths_game(true)
 end
 
 ap "Espero que tenham gostado ;]"
