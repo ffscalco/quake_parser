@@ -29,12 +29,19 @@ module Parser
     def create_player(line)
       @player = Player.new(line.chomp('')[-1, 1]) if line.include? "ClientConnect:"
 
+      if line.include? "ClientDisconnect:"
+        @player = @game.find_player(line, "ClientDisconnect")
+
+        @player.online = false
+      end
+
       if line.include? "ClientUserinfoChanged:"
-        exist_player = @game.find_player(line, "ClientUserinfoChanged")
+        player_name = get_player_name(line)
+        exist_player = @game.find_player(line, "ClientUserinfoChanged", player_name)
 
         exist_player.nil? ? @game.players << @player : @player = exist_player
 
-        @player.name = get_player_name(line)
+        @player.name = player_name
       end
     end
 
