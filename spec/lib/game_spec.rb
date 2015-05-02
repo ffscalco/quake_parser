@@ -68,4 +68,34 @@ RSpec.describe Game do
       expect(game.find_player(line_kill, "Kill_something")).to be_nil
     end
   end
+
+  describe "#count_kills_by_means" do
+    it "should return a translated hash grouped by mean" do
+      game = Game.new("game_1")
+      game.kills_by_means = ["MOD_SHOTGUN", "MOD_GAUNTLET", "MOD_SHOTGUN", "MOD_CRUSH","MOD_LAVA", "MOD_SHOTGUN", "MOD_CRUSH"]
+
+      expected = {
+        "Shotgun" => 3,
+        "Was squished" => 2,
+        "Gauntlet" => 1,
+        "Soes a back flip into the lava" => 1
+      }
+
+      expect(game.send(:count_kills_by_means, true)).to eq(expected)
+    end
+
+    it "should return a hash grouped by mean" do
+      game = Game.new("game_1")
+      game.kills_by_means = ["MOD_SHOTGUN", "MOD_GAUNTLET", "MOD_SHOTGUN", "MOD_CRUSH","MOD_LAVA", "MOD_SHOTGUN", "MOD_CRUSH"]
+
+      expected = {
+        "MOD_SHOTGUN" => 3,
+        "MOD_CRUSH" => 2,
+        "MOD_GAUNTLET" => 1,
+        "MOD_LAVA" => 1
+      }
+
+      expect(game.send(:count_kills_by_means, false)).to eq(expected)
+    end
+  end
 end
