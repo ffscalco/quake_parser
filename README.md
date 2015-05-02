@@ -1,4 +1,4 @@
-Codeminer 42 Teste
+Teste - Codeminer 42
 ------
 
 ## Url do teste
@@ -9,7 +9,7 @@ https://gist.github.com/akitaonrails/97310463c52467d2ecc6
 * Entre na pasta do projeto.
 * Execute o comando `ruby quake_parser.rb`.
 * Ao executar, no terminal, irá mostrar as opções para ver os resultados do parser, basta apenas digitar o nrº. da opção.
-* Para sair do teste, basta selecionar a opção nrº. 5
+* Para sair do teste, basta selecionar a opção nrº. 6
 
 ## Como rodar os testes da aplicação
 * Abra um terminal.
