@@ -42,15 +42,25 @@ module Parser
       player = @game.find_player(line, "Kill: 1022")
       player.kills -= 1
       player.total_deaths += 1
+
+      @game.kills_by_means << get_meaning_death(line)
     end
 
     def count_kills_by_player(line)
       player = @game.find_player(line, "Kill")
       player.kills += 1
       player.total_kills += 1
+
+      @game.kills_by_means << get_meaning_death(line)
     end
 
     def get_player_name(line)
       return line.slice(line.index("\\")..-1).split("\\t").first.delete("\\")
+    end
+
+    def get_meaning_death(line)
+      str_to_cut = " by "
+
+      return line.slice(line.index(str_to_cut)..-1).delete(str_to_cut).chomp()
     end
 end

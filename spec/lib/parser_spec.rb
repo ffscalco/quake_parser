@@ -9,6 +9,8 @@ RSpec.describe Parser do
   end
 
   let(:anonymous_class) {AnonymousClass.new}
+  let(:meaning_kill_world) { "25:41 Kill: 1022 8 19: <world> killed Some Player by MOD_FALLING" }
+  let(:meaning_kill_player) { "15:18 Kill: 5 5 7: Some Player killed Other Player by MOD_GRAPPLE" }
 
   describe "#create_player" do
     let(:new_connection) {"20:34 ClientConnect: 2"}
@@ -70,6 +72,19 @@ RSpec.describe Parser do
 
       expect(anonymous_class.instance_variable_get(:@game).players.first.total_deaths).to eq(3)
     end
+
+    it "should add meaning of death to array" do
+      anonymous_class.instance_variable_set(:@game, Game.new("game_1"))
+      expect(anonymous_class.instance_variable_get(:@game).kills_by_means.size).to eq(0)
+
+      player = Player.new("8")
+      anonymous_class.instance_variable_get(:@game).players << player
+
+      anonymous_class.send(:count_kills_by_world, meaning_kill_world)
+
+      expect(anonymous_class.instance_variable_get(:@game).kills_by_means.size).to eq(1)
+      expect(anonymous_class.instance_variable_get(:@game).kills_by_means.first).to eq("MOD_FALLING")
+    end
   end
 
   describe "#count_kills_by_player" do
@@ -96,6 +111,19 @@ RSpec.describe Parser do
 
       expect(anonymous_class.instance_variable_get(:@game).players.first.total_kills).to eq(10)
     end
+
+    it "should add meaning of death to array" do
+      anonymous_class.instance_variable_set(:@game, Game.new("game_1"))
+      expect(anonymous_class.instance_variable_get(:@game).kills_by_means.size).to eq(0)
+
+      player = Player.new("5")
+      anonymous_class.instance_variable_get(:@game).players << player
+
+      anonymous_class.send(:count_kills_by_player, meaning_kill_player)
+
+      expect(anonymous_class.instance_variable_get(:@game).kills_by_means.size).to eq(1)
+      expect(anonymous_class.instance_variable_get(:@game).kills_by_means.first).to eq("MOD_GRAPPLE")
+    end
   end
 
   describe "#get_player_name" do
@@ -103,6 +131,12 @@ RSpec.describe Parser do
 
     it "should get player name" do
       expect(anonymous_class.send(:get_player_name, player)).to eq("Player Name Here")
+    end
+  end
+
+  describe "#get_meaning_death" do
+    it "should get meaning death description" do
+      expect(anonymous_class.send(:get_meaning_death, meaning_kill_player)).to eq("MOD_GRAPPLE")
     end
   end
 
