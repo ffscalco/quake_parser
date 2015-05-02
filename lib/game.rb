@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
 
 class Game
-  attr_accessor :total_kills, :players, :name
+  attr_accessor :total_kills, :players, :name, :kills_by_means
 
   def initialize(name)
     @name = name
     @total_kills = 0
     @players = []
+    @kills_by_means =[]
   end
 
   def find_player(line, type)

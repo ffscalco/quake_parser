@@ -20,6 +20,10 @@ RSpec.describe Game do
     it "should initialize players with empty array" do
       expect(game.instance_variable_get(:@players)).to eq([])
     end
+
+    it "should initialize kills_by_means with empty array" do
+      expect(game.instance_variable_get(:@kills_by_means)).to eq([])
+    end
   end
 
   describe "#get_id" do
