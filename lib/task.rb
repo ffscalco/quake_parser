@@ -64,6 +64,30 @@ class Task
     meanings_deaths
   end
 
+  def resume_with_rank_game
+    info = []
+
+    @games.each do |game|
+      info << {
+        "#{game.name}:" => {
+          "total_kills": game.total_kills.to_i,
+          "players": game.players.map(&:name).sort,
+          "kills": game.players.map{|p| {p.name => p.kills}}.sort_by{|p|  p.first[0]}
+        }
+      }
+
+      rank = {}
+
+      game.players.each do |player|
+        rank[player.name] = mount_player_rank(player)
+      end
+
+      info.select {|i| i["#{game.name}:"] }.first["Rank:"] = rank.sort_by{|key, value| -value["total_kills"]}.to_h
+    end
+
+    info
+  end
+
   private
     def mount_player_rank(player)
       return {

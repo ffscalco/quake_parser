@@ -105,7 +105,65 @@ RSpec.describe Task do
         expect(task.means_deaths_game(true)).to eq([expected])
       end
     end
+
+    describe "#resume_with_rank_game" do
+      it "should return a hash with game name, total kills, players, players's kills and players rank" do
+        expected = {
+          "game_1:" => {
+            :total_kills => 5,
+            :players => ["Dono da Bola", "Isgalamido", "Zeh"],
+            :kills => [
+              {"Dono da Bola" => -1},
+              {"Isgalamido" => 1},
+              {"Zeh" => -2}
+            ]
+          }, "Rank:" => {
+            "Dono da Bola" => {
+              "total_kills" => 1,
+              "total_deaths" => 1
+            },
+            "Isgalamido" => {
+              "total_kills" => 1,
+              "total_deaths" => 0
+            },
+            "Zeh" => {
+              "total_kills" => 0,
+              "total_deaths" => 2
+            }
+          }
+          }, {
+          "game_2:" => {
+            :total_kills => 6,
+            :players => ["Dono da Bola", "Mal", "Zeh"],
+            :kills => [
+              {"Dono da Bola" => 1},
+              {"Mal" => 3},
+              {"Zeh" => 0}
+            ]
+          }, "Rank:" => {
+            "Mal" => {
+              "total_kills" => 3,
+              "total_deaths" => 0
+            },
+            "Zeh" => {
+              "total_kills" => 1,
+              "total_deaths" => 1
+            },
+            "Dono da Bola" => {
+              "total_kills" => 0,
+              "total_deaths" => 1
+            }
+          }
+        }
+
+        task = Task.new
+        task.instance_variable_set(:@games, medium_game)
+
+        expect(task.resume_with_rank_game).to eq(expected)
+      end
+    end
   end
+
   describe "#mount_player_rank" do
     it "should return a hash of player total_kills and total_deaths" do
       player = Player.new("1")
