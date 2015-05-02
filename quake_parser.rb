@@ -6,7 +6,7 @@ task = Task.new
 def show_options
   ap "Selecione uma das opções abaixo!"
   ap "1) Resumo dos jogos"
-  ap "2) Resumo dos jogos com rank dos jogadores"
+  ap "2) Resumo dos jogos com rank geral dos jogadores"
   ap "3) Resumo das mortes agrupadas"
   ap "4) Resumo das mortes traduzidas agrupadas"
   ap "5) Sair do teste"
