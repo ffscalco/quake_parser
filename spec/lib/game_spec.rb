@@ -76,6 +76,24 @@ RSpec.describe Game do
     it "should return nil if don't find the player" do
       expect(game.find_player(line_kill, "Kill_something")).to be_nil
     end
+
+    it "should return player with name 'Player'" do
+      player3.name=  "Player"
+      game.players << player3
+
+      expect(game.find_player(line_kill, "Kill", "Player")).to eq(player3)
+    end
+
+    it "should return player with name 'Player' and update attributes(id, online)" do
+      player = Player.new("5")
+      player.name=  "Player"
+      player.online = false
+      game.players << player
+
+      found_player = game.find_player(line_client, "ClientUserinfoChanged", "Player")
+      expect(found_player.id).to eq("10")
+      expect(found_player.online?).to eq(true)
+    end
   end
 
   describe "#count_kills_by_means" do

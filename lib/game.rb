@@ -11,8 +11,17 @@ class Game
     @kills_by_means =[]
   end
 
-  def find_player(line, type)
-    return self.players.select{|p| p.id == get_id(line, type)}.first
+  def find_player(line, type, name=nil)
+    player = self.players.select{|p| p.name == name}.first unless name.nil?
+
+    if player.nil?
+      player = self.players.select{|p| p.id == get_id(line, type) and p.online?}.first
+    else
+      player.id = get_id(line, type)
+      player.online = true
+    end
+
+    return player
   end
 
   def count_kills_by_means(translate)
