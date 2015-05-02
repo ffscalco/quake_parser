@@ -93,8 +93,9 @@ RSpec.describe Parser do
     it "should increment player kills" do
       anonymous_class.instance_variable_set(:@game, Game.new("game_1"))
       player = Player.new("5")
+      player2 = Player.new("3")
       player.kills = 4
-      anonymous_class.instance_variable_get(:@game).players << player
+      anonymous_class.instance_variable_get(:@game).players = [player, player2]
 
       anonymous_class.send(:count_kills_by_player, player_kill)
 
@@ -104,12 +105,24 @@ RSpec.describe Parser do
     it "should increment player total_kills" do
       anonymous_class.instance_variable_set(:@game, Game.new("game_1"))
       player = Player.new("5")
+      player2 = Player.new("3")
       player.total_kills = 9
-      anonymous_class.instance_variable_get(:@game).players << player
+      anonymous_class.instance_variable_get(:@game).players = [player, player2]
 
       anonymous_class.send(:count_kills_by_player, player_kill)
 
       expect(anonymous_class.instance_variable_get(:@game).players.first.total_kills).to eq(10)
+    end
+
+    it "should increment player killed total_deaths" do
+      anonymous_class.instance_variable_set(:@game, Game.new("game_1"))
+      player = Player.new("5")
+      player2 = Player.new("3")
+      anonymous_class.instance_variable_get(:@game).players = [player, player2]
+
+      anonymous_class.send(:count_kills_by_player, player_kill)
+
+      expect(anonymous_class.instance_variable_get(:@game).players.last.total_deaths).to eq(1)
     end
 
     it "should add meaning of death to array" do

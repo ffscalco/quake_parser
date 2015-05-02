@@ -51,6 +51,9 @@ module Parser
       player.kills += 1
       player.total_kills += 1
 
+      player = @game.find_player(line, "Killed")
+      player.total_deaths += 1
+
       @game.kills_by_means << get_meaning_death(line)
     end
 
