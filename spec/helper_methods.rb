@@ -11,6 +11,7 @@ def simple_game
   player3.name = "Isgalamido"
   player3.kills = 1
   game.players = [player1, player2, player3]
+  game.kills_by_means = ["MOD_SHOTGUN", "MOD_GAUNTLET", "MOD_SHOTGUN", "MOD_CRUSH","MOD_LAVA", "MOD_SHOTGUN", "MOD_CRUSH"]
 
   game
 end
