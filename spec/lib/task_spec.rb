@@ -69,6 +69,42 @@ RSpec.describe Task do
         expect(task.rank_game).to eq(expected)
       end
     end
+
+    describe "#means_deaths_game" do
+      it "should return a hash with game name and grouped means of death" do
+        expected = {"game_1:" => {
+            :kills_by_means=> {
+              "MOD_SHOTGUN" => 3,
+              "MOD_CRUSH" => 2,
+              "MOD_GAUNTLET" => 1,
+              "MOD_LAVA" => 1
+            }
+          }
+        }
+
+        task = Task.new
+        task.instance_variable_set(:@games, [simple_game])
+
+        expect(task.means_deaths_game(false)).to eq([expected])
+      end
+
+      it "should return a hash with game name and grouped, translated means of death" do
+        expected = {"game_1:" => {
+            :kills_by_means=> {
+              "Shotgun" => 3,
+              "Was squished" => 2,
+              "Gauntlet" => 1,
+              "Soes a back flip into the lava" => 1
+            }
+          }
+        }
+
+        task = Task.new
+        task.instance_variable_set(:@games, [simple_game])
+
+        expect(task.means_deaths_game(true)).to eq([expected])
+      end
+    end
   end
   describe "#mount_player_rank" do
     it "should return a hash of player total_kills and total_deaths" do

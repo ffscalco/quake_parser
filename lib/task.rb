@@ -50,6 +50,20 @@ class Task
     rank.sort_by{|key, value| -value["total_kills"]}.to_h
   end
 
+  def means_deaths_game(translate)
+    meanings_deaths = []
+
+    @games.each do |game|
+      meanings_deaths << {
+        "#{game.name}:" => {
+          "kills_by_means": game.count_kills_by_means(translate)
+        }
+      }
+    end
+
+    meanings_deaths
+  end
+
   private
     def mount_player_rank(player)
       return {
