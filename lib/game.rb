@@ -29,13 +29,29 @@ class Game
     def get_id(line, type)
       case(type)
       when "ClientUserinfoChanged"
-        return line.split("ClientUserinfoChanged: ").last[0]
+        new_line = line.split("ClientUserinfoChanged: ").last
+
+        return remove_line_trash(new_line)
       when "Kill: 1022"
-        return line.split("Kill: 1022 ").last[0]
+        new_line = line.split("Kill: 1022 ").last
+
+        return remove_line_trash(new_line)
       when "Kill"
-        return line.split("Kill: ").last[0]
+        new_line = line.split("Kill: ").last
+
+        return new_line.split(" ").first
+      when "Killed"
+        new_line = line.split("Kill: ").last
+
+        return new_line.split(" ")[1]
+      when "ClientDisconnect"
+        return line.split("ClientDisconnect: ").last.chomp
       else
         return ""
       end
+    end
+
+    def remove_line_trash(line)
+      return line.slice(0..line.index(" ")-1)
     end
 end
