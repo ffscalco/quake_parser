@@ -1,6 +1,8 @@
 Teste - Codeminer 42
 ------
 
+[![Code Climate](https://codeclimate.com/github/ffscalco/quake_parser/badges/gpa.svg)](https://codeclimate.com/github/ffscalco/quake_parser)
+
 ## Url do teste
 https://gist.github.com/akitaonrails/97310463c52467d2ecc6
 
